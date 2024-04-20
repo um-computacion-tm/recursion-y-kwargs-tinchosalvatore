@@ -27,14 +27,43 @@ database = {
     }
 }
 
-nombre = input("Ingrese el dato a buscar: ")
+import unittest
 
-resultado = buscar_datos(nombre, **database)
-if resultado:
-    print(f"La persona se encuentra en la base de datos con el id: {resultado}")
-else:
-    print("La persona no se encuentra en la base de datos.")
+def buscar_datos(*args, **kwargs):
+    for key, value in kwargs.items():
+        for k, v in value.items():
+            if v in args:
+                return key
+    return None
 
+database = {
+    "per1": {
+        "nombre1": "Pablo",
+        "nombre2": "Diego",
+        "apellido1": "Ruiz",
+        "apellido2": "Picasso"
+    },
+    "per2": {
+        "nombre1": "Elio",
+        "apellido1": "Anci"
+    },
+    "per3": {
+        "nombre1": "Elias",
+        "nombre2": "Marcos",
+        "nombre3": "Luciano",
+        "apellido1": "Marcelo",
+        "apellido2": "Gonzalez"
+    }
+}
+
+datos = []
+for i in range(5):
+    dato = input("Ingrese los datos a buscar (o 'fin' para terminar): ")
+    if dato == 'fin':
+        break
+    datos.append(dato)
+
+resultado = buscar_datos(*datos, **database)
 
 class TestBuscarDatos(unittest.TestCase):
     def test_Pablo(self):
